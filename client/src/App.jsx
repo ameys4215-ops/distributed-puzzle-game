@@ -11,7 +11,12 @@ function getWebSocketUrl() {
   }
   const isHttps = typeof window !== "undefined" && window.location.protocol === "https:";
   const host = typeof window !== "undefined" ? window.location.hostname : "localhost";
-  return isHttps ? `wss://${window.location.host}` : `ws://${host}:3001`;
+  
+  if (host === "localhost" || host === "127.0.0.1") {
+    return `ws://${host}:3001`;
+  }
+  
+  return isHttps ? `wss://${window.location.host}/api` : `ws://${window.location.host}/api`;
 }
 
 function areAdjacent(idx1, idx2) {
